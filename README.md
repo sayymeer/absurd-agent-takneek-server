@@ -5,14 +5,14 @@ Clone the repo and go to root folder of repo. Then run the following commands.
 docker build . -t <your username>/absurd-agent
 
 // Run the docker image
-docker run -p <port>:8080 -d <your username>/absurd-agent
+docker run -p 8000:8000 -d <your username>/absurd-agent
 
 //Now you can send Request to server using Thunder client or Postman or you can run cli.py and enter the port number to play the game.
 ```
 
 ## Using CLI
 
-After running your server, you can either use POSTMAN or Thunder Client to send `GET` and `POST` request to `localhost:<port>`. Or you can python cli using below commands:
+After running your server, you can either use POSTMAN or Thunder Client to send `GET` and `POST` request to `localhost:8000`. Or you can python cli using below commands:
 
 ```
 // After running your docker container

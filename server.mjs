@@ -7,6 +7,8 @@ import { wordleHangman } from "./scripts/wordleHangman.mjs";
 import { duordlemain } from "./scripts/duordle.mjs";
 import { defaultDictionary } from "./data/dictionary.mjs";
 
+const port = 8000
+
 const app = express();
 app.use(express.json());
 app.use(session({
@@ -123,4 +125,4 @@ app.post("/", (req, res) => {
 	}
 })
 
-app.listen(8000,() => console.log("Server running on port 8000"));
+app.listen(port,() => console.log("Server running on port 8000"));
