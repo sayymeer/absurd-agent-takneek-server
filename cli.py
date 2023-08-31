@@ -60,7 +60,7 @@ def playHangman(session, getDone=True):
     while attemps_left > 0:
         print(''.join(word))
         letter = ''
-        while len(letter) != 1 and letter.isalpha() == False:
+        while len(letter) != 1 or letter.isalpha() == False:
             letter = input(f"Enter a Letter (attemps left = {attemps_left}) : ").lower()
         response = json.loads(session.post(uri, json={"letter": letter}).text)
         if type(response) == list:
@@ -79,7 +79,8 @@ def playHanguced(session, getDone=True):
     letters = response["letters"]
     print(f"Number of Letters in word: {int(blanks)}\n")
     word = ['-' for _ in range(blanks)]
-    while letters.count('_') != len(letters):
+    done = 0
+    while done != len(letters):
         print(''.join(word))
         for row in range(len(letters)//5):
             print(' '.join(letters[row*5:(row+1)*5]))
@@ -93,7 +94,7 @@ def playHanguced(session, getDone=True):
         elif type(response) == dict:
             print(f"Result: {response['status']}\nCorrect Word: {response['correctWord']}\n")
             break
-        letters[letters.index(letter)] = '_'
+        done += 1
 def playWordman(session, getDone=True):
     if not getDone:
         session.get(uri)
@@ -158,7 +159,8 @@ def changeDictionary(session):
         word = ' '
         while not word.isalpha() and word != '':
             word = input("Enter a word (just press enter for nothing) : ")
-        words.append(word)
+        if word != '':
+            words.append(word)
     print(f"{modes[choice]} Dictionary")
     session.post(f"{uri}/dictionary", json={"words": words, "set": choice})
 
