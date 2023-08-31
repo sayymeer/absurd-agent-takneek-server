@@ -74,6 +74,7 @@ def playHangman(session, getDone=True):
 def playHanguced(session, getDone=True):
     if not getDone:
         session.get(uri)
+    attemps_left = 7
     response = json.loads(session.post(uri, json={"game": games[choice]}).text)
     blanks = response["blanks"]
     letters = response["letters"]
@@ -86,7 +87,7 @@ def playHanguced(session, getDone=True):
             print(' '.join(letters[row*5:(row+1)*5]))
         letter = ''
         while letter not in letters:
-            letter = input("Enter a letter (Given Above): ").lower()
+            letter = input(f"Enter a letter (Given Above) (attempts left = {attemps_left}): ").lower()
         response = json.loads(session.post(uri, json={"letter": letter}).text)
         if response != -1 and type(response) == list:
             for index in response:
@@ -94,6 +95,8 @@ def playHanguced(session, getDone=True):
         elif type(response) == dict:
             print(f"Result: {response['status']}\nCorrect Word: {response['correctWord']}\n")
             break
+        else:
+            attemps_left -= 1
         done += 1
 def playWordman(session, getDone=True):
     if not getDone:
@@ -111,7 +114,7 @@ def playWordman(session, getDone=True):
             attemps_left -= 1
         elif response == 1:
             print("Letter exists but at another position")
-        else:
+        elif response == 2:
             print("Letter exists and at right position")
         if type(response) == dict:
             print(f"Result: {response['status']}\nCorrect Word: {response['correctWord']}\nAttemps Left: {attemps_left - (1 if response['status'] == 'Game Lost' else 0)}")
