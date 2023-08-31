@@ -18,8 +18,8 @@ After running your server, you can either use POSTMAN or Thunder Client to send 
 // After running your docker container
 python ./cli.py
 ```
-
-Now you can use our command line interface
+You will be asked for port number. Enter `8000` as setup in above section.
+Now you can use our command line interface.
 
 ## Games Available
 Below Games are currently available and You can get list of Games by Sending a request to `GET /` .
