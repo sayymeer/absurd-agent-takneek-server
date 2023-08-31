@@ -106,10 +106,16 @@ def playWordman(session, getDone=True):
             letter = input(f"Enter a Letter (attemps left = {attemps_left}) : ").lower()
         position = int(input(f"Enter the Position of the Letter (attemps left = {attemps_left}) : "))
         response = json.loads(session.post(uri, json={"letter": letter, "position": position}).text)
+        if response == 0:
+            print("Letter doesn't Exist in Mystery Word")
+            attemps_left -= 1
+        elif response == 1:
+            print("Letter exists but at another position")
+        else:
+            print("Letter exists and at right position")
         if type(response) == dict:
             print(f"Result: {response['status']}\nCorrect Word: {response['correctWord']}\nAttemps Left: {attemps_left - (1 if response['status'] == 'Game Lost' else 0)}")
             break
-        attemps_left -= 1
 def playDuordle(session, getDone=True):
     if not getDone:
         session.get(uri)
