@@ -13,7 +13,7 @@ docker run -p <port>:8080 -d <your username>/absurd-agent
 ## Games Available
 Below Games are currently available and You can get list of Games by Sending a request to `GET /` .
 1. **Wordle** : A game where you have to guess a 5 letter word in 6 chances. You will have to send a word and you will get an array of numbers. In which 0 -> letter not present, 1 -> letter present but at another position, 2 -> letter present at correct position
-2. **Hangman** : A game where you have to guess a Word in 7 wrong chances. The length of the word is provided. You have to send a letter, in response you will get an array of indexes where the letter is present or -1 if the letter is not present in the word
+2. **Hangman** : A game where you have to guess a Word in 7 wrong chances. The length of the word is provided. You have to send a letter, in response you will get an array of indices where the letter is present or -1 if the letter is not present in the word
 3. **Hanguced** : This is a reduced difficulty version of Hangman. When game starts, you will get length of mystery word and an array of letters. The word will be made out of letters from that array.
 4. **Wordman** : In this game you have to guess a 5 letter word with 7 wrong chances. You have to guess letter and its position. In response you will get 0 -> letter not present, 1 -> letter present but at another position, 2 -> letter present at provided position.
 5. **Duordle** : This is two wordle games playing together. You have to guess two words in 9 chances.
@@ -22,7 +22,7 @@ Below Games are currently available and You can get list of Games by Sending a r
 Below are steps to Play any above game:
 
 1. Send a request to `GET /`. You will get a list of games. It will initialize a session for you.
-2. Send a request to `POST /` with your game for e.g. `{"game" : "wordle"}`. Then you will get a success message if the game is wordle, wordman or Duordle. You will get number of letters if selected game is hangman. You will get number of letters and options if game is hangman.
+2. Send a request to `POST /` with your game for e.g. `{"game" : "wordle"}`. Then you will get a success message if the game is wordle, wordman or Duordle. You will get number of letters if selected game is hangman. You will get number of letters and options if game is hanguced.
 3. Now you have to send your response at `POST /`.
 4. Details of request and response for each game is given below.
 5. When the game ends session will be destroyed.
@@ -63,10 +63,10 @@ Get ready for engaging word challenges and have a blast playing our assortment o
 2. At the start, you'll receive the length of the mystery word.
 3. Send your guesses to `POST /` using the format `{"letter": "a"}` where "a" is your chosen letter.
 4. If the guessed letter doesn't exist in the word, you'll receive a response of `-1`.
-5. If the guessed letter exists in the word, you'll receive an array of indexes indicating where the letter is found.
-6. Make your guesses within 7 attempts to win the game.
-7. If you don't guess the word within 7 tries, you'll receive a "Game Lost" message along with the correct word and your attempt history.
-8. Successfully guessing the word within 7 attempts will earn you a "Game Win" message, along with your correct guess and attempt history.
+5. If the guessed letter exists in the word, you'll receive an array of indices indicating where the letter is found.
+6. Make your guesses within 7 wrong attempts to win the game.
+7. If you don't guess the word within 7  wrong attempts, you'll receive a "Game Lost" message along with the correct word and your attempt history.
+8. Successfully guessing the word before 7 wrong attempts will earn you a "Game Win" message, along with your correct guess and attempt history.
 
 Enjoy the thrill of the Hangman challenge and have a blast playing our assortment of word games!
 
