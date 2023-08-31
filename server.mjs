@@ -7,6 +7,8 @@ import { wordleHangman } from "./scripts/wordleHangman.mjs";
 import { duordlemain } from "./scripts/duordle.mjs";
 import { defaultDictionary } from "./data/dictionary.mjs";
 
+const port = 8000
+
 const app = express();
 app.use(express.json());
 app.use(session({
@@ -17,10 +19,9 @@ app.use(session({
   }))
 app.use((req, res, next) => {console.log(req.session); next();});
 app.use(cors());
-let dictionary = Array.from(defaultDictionary)
+let dictionary = defaultDictionary
 const games = ["wordle", "hangman","hanguced","wordman","duordle"];
 
-const wordleDictionary = dictionary.filter(word => word.length === 5)
 app.post("/dictionary", (req, res) => {
 	if (req.session.game==="none") {
 		if (!Array.isArray(req.body.words)) {
@@ -57,9 +58,10 @@ app.post("/", (req, res) => {
 			return;
 		}
 		req.session.game = req.body.game;
-		let dictionary = Array.from(req.session.dictionary)
+		let dictionary = req.session.dictionary
 		//If selected game is wordle
 		if (req.session.game===games[0]) {
+			const wordleDictionary = dictionary.filter(word => word.length === 5)
 			req.session.solution = wordleDictionary[Math.floor(Math.random()*wordleDictionary.length)];
 			req.session.previous_tries = [];
 			res.status(200).json("Success");
@@ -83,6 +85,7 @@ app.post("/", (req, res) => {
 
 		//if game is wordman
 		if (req.session.game === games[3]) {
+			const wordleDictionary = dictionary.filter(word => word.length === 5)
 			req.session.solution = wordleDictionary[Math.floor(Math.random()*wordleDictionary.length)];
 			req.session.previous_tries = [];
 			res.status(200).json("Success");
@@ -90,6 +93,7 @@ app.post("/", (req, res) => {
 
 		//if game is duordle
 		if (req.session.game===games[4]) {
+			const wordleDictionary = dictionary.filter(word => word.length === 5)
 			req.session.solution1 = wordleDictionary[Math.floor(Math.random()*wordleDictionary.length)];
 			req.session.solution2 = wordleDictionary[Math.floor(Math.random()*wordleDictionary.length)];
 			req.session.previous_tries = [];
@@ -121,4 +125,4 @@ app.post("/", (req, res) => {
 	}
 })
 
-app.listen(8000,() => console.log("Server running on port 8000"));
+app.listen(port,() => console.log("Server running on port 8000"));
