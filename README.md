@@ -10,6 +10,17 @@ docker run -p <port>:8080 -d <your username>/absurd-agent
 //Now you can send Request to server using Thunder client or Postman or you can run cli.py and enter the port number to play the game.
 ```
 
+## Using CLI
+
+After running your server, you can either use POSTMAN or Thunder Client to send `GET` and `POST` request to `localhost:<port>`. Or you can python cli using below commands:
+
+```
+// After running your docker container
+python ./cli.py
+```
+
+Now you can use our command line interface
+
 ## Games Available
 Below Games are currently available and You can get list of Games by Sending a request to `GET /` .
 1. **Wordle** : A game where you have to guess a 5 letter word in 6 chances. You will have to send a word and you will get an array of numbers. In which 0 -> letter not present, 1 -> letter present but at another position, 2 -> letter present at correct position
